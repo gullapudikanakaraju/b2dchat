@@ -1,10 +1,15 @@
 module.exports= function(city, request, response){
-	console.log('in locality_model.js');
+	console.log('in locality_model.js ');
 	var locality_model= require('../schemas/property_schema.js');
 	locality_model.aggregate([{
+		"$match": {
+			"city": city
+		}
+	},
+	{
 		"$group":
          {
-           "_id": { "city": city},
+           "_id": { "city": "$city"},
            localities: { $addToSet: "$locality" }
          }
 	}], function(error, result){
