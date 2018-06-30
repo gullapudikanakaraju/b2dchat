@@ -50,6 +50,8 @@ app.use(session1);
 
 require('./controllers/basic_controller.js')(app);
 
+require('./controllers/locality_controller.js')(app);
+
 require('./controllers/prop_controller.js')(app);
 
 // require('./controllers/home_controller.js')(app);

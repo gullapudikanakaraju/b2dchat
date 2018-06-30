@@ -46,17 +46,39 @@ module.exports = function(){
 								request.session._id= result._id;
 								request.session.member= member;
 								console.log('session data is ', request.session);
-								// response.redirect('/home');
-								response.json({
-									success: true
+
+								var city_model= require('../schemas/property_schema.js');
+								city_model.distinct('city', function(e, r){
+									if(e)
+									{
+										console.log('some internal error occurred ', e);
+										response.status(500);
+										response.json({
+											success: false,
+											message: 'some internal error occurred !'
+										});
+									}
+									else
+									{
+										console.log('cities are ', r);
+										// response.json({
+										// 	success: true,
+										// 	cities: r
+										// });
+										response.render('../views/buyer_search_location', r);
+									}
 								});
+								// response.redirect('/home');
+								// response.json({
+								// 	success: true
+								// });
 							}
 							else
 							{
 								console.log('Invalid password');
-								response.json({
-									success: false
-								});
+								// response.json({
+								// 	success: false
+								// });
 								response.render('../views/login', {message : 'Invalid Password !'});
 							}
 						});
@@ -166,6 +188,7 @@ module.exports = function(){
 					if(result == null)
 					{
 						console.log('invalid email');
+						request.session.destroy();
             			response.status(200);
             			response.json({
             				success: false,
