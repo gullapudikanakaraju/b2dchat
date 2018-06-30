@@ -27,11 +27,11 @@ module.exports = function(){
 					if(result == null)
 					{
 						console.log('No such User');
-						response.json({
-							success: false,
-							message: 'No such User !'
-						});
-						// response.render('../views/login', {message : 'No such User !'});
+						// response.json({
+						// 	success: false,
+						// 	message: 'No such User !'
+						// });
+						response.render('../views/login', {message : 'No such User !'});
 					}
 					else
 					{
@@ -57,7 +57,7 @@ module.exports = function(){
 								response.json({
 									success: false
 								});
-								// response.render('../views/login', {message : 'Invalid Password !'});
+								response.render('../views/login', {message : 'Invalid Password !'});
 							}
 						});
 					}
