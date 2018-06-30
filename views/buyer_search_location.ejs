@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+  <head>
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+      <script>
+        $("#city").change(
+        function() {
+          var city = $("#city").val();
+          jQuery.ajax({
+              url : '',
+              data : {
+              
+              },
+              dataType : 'json',
+              type : 'POST',
+              success : function(localities) {
+                
+              }
+          });
+        });
+      </script>
+  </head>
+  <body>
+  <form id='locality-form' method='POST' action="/buyer_chat_room">
+    <select name="city" id="city">
+      <%
+        for ( var i = 0; i < r.length; i++ ) {%>
+            <option value="<%=r[ i ] %>"> <%=r[ i ] %> </option>
+      <%}%>
+    </select>
+    <br><br>
+    <select name="locality" id="locality">
+      <%
+        for ( var i = 0; i < locality.length; i++ ) {%>
+            <option value="<%=locality[ i ] %>"> <%=locality[ i ] %> </option>
+      <%}%>
+    </select>
+    <br><br>
+    <input type="submit" name="Search">
+  </form>
+
+  </body>
+</html>
