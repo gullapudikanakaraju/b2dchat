@@ -65,7 +65,7 @@ module.exports = function(){
 										// 	success: true,
 										// 	cities: r
 										// });
-										response.render('../views/buyer_search_location', r);
+										response.render('../views/buyer_search_location', {r: r});
 									}
 								});
 								// response.redirect('/home');
