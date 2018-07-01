@@ -29,14 +29,28 @@ module.exports= function(request, response){
 				}
 				else
 				{
+					var async= require('async');
 					if(r1 != null)
 					{
 						console.log('adding to the chat room !');
-						var x= {};
-						x.member_name= request.session.user_name;
-						x.member_id= request.session._id;
-						groups_model.findOneAndUpdate({_id: r1._id}, {$push: {"members": x}}, function(e2, r2){
-							if(e2)
+						async.parallel({
+							update_dealers_collection : function(callback)
+							{
+								var dealer_model = require('../schemas/dealer_schema.js');
+								var y= {};
+								y.group_name= r1.group_name;
+								dealer_model.update({email : request.session.email }, { $push : {groups : y}}, callback);
+							},
+							update_groups_collection : function(callback)
+							{
+								var groups_model = require('../schemas/groups_schema.js');
+								var x= {};
+								x.member_name= request.session.user_name;
+								x.member_id= request.session._id;
+								groups_model.findOneAndUpdate({group_name : r1.group_name}, { $push : {members : x}}, callback);
+							}
+						}, function(e2, r2){
+							if(error)
 							{
 								console.log('error occurred ', e2);
 								response.json({
@@ -71,7 +85,22 @@ module.exports= function(request, response){
 						y.locality= result.locality;
 						y.members= members;
 						y.created_by= request.session._id;
-						groups_model.create(y, function(e3, r3){
+						console.log('y is ', y);
+						var z= {};
+						z.group_name= y.group_name;
+						console.log('z is ', z);
+
+						var async= require('async');
+						async.parallel({
+							create_chatroom: function(callback){
+								var groups_model = require('../schemas/groups_schema.js');
+								groups_model.create(y, callback);
+							},
+							update_dealers_collection: function(callback){
+								var dealer_model = require('../schemas/dealer_schema.js');
+								dealer_model.update({email : request.session.email }, { $push : {groups : z}}, callback);
+							}
+						}, function(e3, r3){
 							if(e3)
 							{
 								console.log('error occurred ', e3);

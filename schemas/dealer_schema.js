@@ -46,9 +46,9 @@ var dealer_schema = new Schema({
                 trim : true
             },
             joined_on :{
-                type : String,
+                type : Date,
                 required : true,
-                trim : true
+                default: new Date()
             }
         }],
         default : []
@@ -63,11 +63,11 @@ var dealer_schema = new Schema({
     },
     created_at :{
         type: Date,
-        default: Date.now
+        default: new Date()
     },
     updated_at :{
         type: Date,
-        default: Date.now
+        default: new Date()
     }
 }); 
 

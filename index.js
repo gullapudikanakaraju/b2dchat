@@ -54,53 +54,57 @@ require('./controllers/locality_controller.js')(app);
 
 require('./controllers/prop_controller.js')(app);
 
-var io= require('./config/socket.js');
+// var io= require('./config/socket.js');
 
-io.on('connection', function(socket){
-	console.log('one connection established ', socket.id);
-	socket.handshake.session.socket_id = socket.id;
-	socket.handshake.session.save();
-	// var rooms = socket.handshake.session.my_groups;
-	// console.log('rooms are ', rooms);
-	// for(var i=0; i<rooms.length; i++)
-	// {
-	// 	socket.join(rooms[i]);
-	// 	console.log(socket.id, ' joined the room ', rooms[i]);
-	// } 
-	var socket_data_model = require('./schemas/socket_data_schema.js');
-	var data = {};
-	data.email = socket.handshake.session.email;
-	data.socket_id = socket.id;
+// io.on('connection', function(socket){
+// 	console.log('one connection established ', socket.id);
+// 	socket.handshake.session.socket_id = socket.id;
+// 	socket.handshake.session.save();
+// 	// var rooms = socket.handshake.session.my_groups;
+// 	// console.log('rooms are ', rooms);
+// 	// for(var i=0; i<rooms.length; i++)
+// 	// {
+// 	// 	socket.join(rooms[i]);
+// 	// 	console.log(socket.id, ' joined the room ', rooms[i]);
+// 	// } 
+// 	var socket_data_model = require('./schemas/socket_data_schema.js');
+// 	var data = {};
+// 	data.email = socket.handshake.session.email;
+// 	data.socket_id = socket.id;
 
-	socket_data_model.findOne({email : data.email}, function(error, result){
-		if(error)
-			throw error;
-		else
-		{
-			if(result == null)
-			{
-				socket_data_model.create(data, function(e1, r1){
-					if(e1)
-					{
-						console.log('some internal error occurred ', e1);
-						throw error;
-					}
-					else
-						console.log('successfully inserted email and socket_id in the db ', r1);
-				});
-			}
-			else
-			{
-				socket_data_model.update({email : data.email}, {socket_id : data.socket_id}, function(e2, r2){
-					if(e2)
-					{
-						console.log('some internal error occurred ', e2);
-						throw err;
-					}
-					else
-						console.log('successfully updated socket_id in the database ', res);
-				});
-			}
-		}
-	});
-});
+// 	socket_data_model.findOne({email : data.email}, function(error, result){
+// 		if(error)
+// 			throw error;
+// 		else
+// 		{
+// 			if(result == null)
+// 			{
+// 				socket_data_model.create(data, function(e1, r1){
+// 					if(e1)
+// 					{
+// 						console.log('some internal error occurred ', e1);
+// 						throw error;
+// 					}
+// 					else
+// 						console.log('successfully inserted email and socket_id in the db ', r1);
+// 				});
+// 			}
+// 			else
+// 			{
+// 				socket_data_model.update({email : data.email}, {socket_id : data.socket_id}, function(e2, r2){
+// 					if(e2)
+// 					{
+// 						console.log('some internal error occurred ', e2);
+// 						throw err;
+// 					}
+// 					else
+// 						console.log('successfully updated socket_id in the database ', res);
+// 				});
+// 			}
+// 		}
+// 	});
+
+// 	socket.on('getMyRooms', function(){
+// 		var 
+// 	});
+// });
