@@ -38,6 +38,21 @@ var dealer_schema = new Schema({
         type: [Number],
         required: true
     },
+    groups :{
+        type : [{
+            group_name :{
+                type : String,
+                required : true,
+                trim : true
+            },
+            joined_on :{
+                type : String,
+                required : true,
+                trim : true
+            }
+        }],
+        default : []
+    },
     is_email_verified :{
         type: Boolean,
         default: false

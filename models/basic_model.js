@@ -65,11 +65,8 @@ module.exports = function(){
 										// 	success: true,
 										// 	cities: r
 										// });
-<<<<<<< HEAD
+										
 										response.render('../views/buyer_search_location', {r:r});
-=======
-										response.render('../views/buyer_search_location', {r: r});
->>>>>>> 1c2810360a106ea29a1c171c1c8440531be074b9
 									}
 								});
 								// response.redirect('/home');
